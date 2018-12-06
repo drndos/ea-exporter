@@ -1,6 +1,5 @@
 package sk.essentialdata;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,22 +12,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author Filip Bednárik
- * @since 4.4.2017
- */
 @SpringBootApplication
 @RestController
 public class EaExporterApplication extends WebMvcConfigurerAdapter {
+
     public static void main(String[] args) {
         SpringApplication.run(EaExporterApplication.class, args);
     }
 
-    @Value("${app.path-to-webserver}")
-    String pathToWebserver;
+    private final String pathToWebserver;
+    private final EaDumpService eaDumpService;
 
-    @Autowired
-    EaDumpService eaDumpService;
+    public EaExporterApplication(@Value("${app.path-to-webserver}") String pathToWebserver,
+                                 EaDumpService eaDumpService) {
+        this.pathToWebserver = pathToWebserver;
+        this.eaDumpService = eaDumpService;
+    }
 
     @RequestMapping("/generate")
     public String generate(@RequestParam(value = "guid", defaultValue = "${app.default-guid}") String guid) {
