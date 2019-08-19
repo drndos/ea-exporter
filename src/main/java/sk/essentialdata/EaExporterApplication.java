@@ -1,5 +1,7 @@
 package sk.essentialdata;
 
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -10,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 /**
  * @author Filip Bednárik
  * @since 4.4.2017
@@ -20,31 +19,33 @@ import java.io.IOException;
 @SpringBootApplication
 @RestController
 public class EaExporterApplication extends WebMvcConfigurerAdapter {
-    public static void main(String[] args) {
-        SpringApplication.run(EaExporterApplication.class, args);
-    }
 
-    @Value("${app.path-to-webserver}")
-    String pathToWebserver;
+  public static void main(String[] args) {
+    SpringApplication.run(EaExporterApplication.class, args);
+  }
 
-    @Autowired
-    EaDumpService eaDumpService;
+  @Value("${app.path-to-webserver}")
+  String pathToWebserver;
 
-    @RequestMapping("/generate")
-    public String generate(@RequestParam(value = "guid", defaultValue = "${app.default-guid}") String guid) {
-        eaDumpService.dump(guid);
-        return "Success";
-    }
+  @Autowired
+  EaDumpService eaDumpService;
 
-    @RequestMapping("/")
-    void handleFoo(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/index.html");
-    }
+  @RequestMapping("/generate")
+  public String generate(
+      @RequestParam(value = "guid", defaultValue = "${app.default-guid}") String guid) {
+    eaDumpService.dump(guid);
+    return "Success";
+  }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("file:///" + pathToWebserver + "/")
-                .setCachePeriod(0);
-    }
+  @RequestMapping("/")
+  void handleFoo(HttpServletResponse response) throws IOException {
+    response.sendRedirect("/index.html");
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/**")
+        .addResourceLocations("file:///" + pathToWebserver + "/")
+        .setCachePeriod(0);
+  }
 }

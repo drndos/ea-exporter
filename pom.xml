@@ -5,7 +5,7 @@
 
 	<groupId>sk.essentialdata</groupId>
 	<artifactId>ea-exporter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>ea-exporter</name>
@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.2.RELEASE</version>
+		<version>1.5.22.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -52,5 +52,17 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>essentialdata-maven-all</id>
+			<url>https://repo.essential-data.sk/repository/maven-all/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
 </project>
