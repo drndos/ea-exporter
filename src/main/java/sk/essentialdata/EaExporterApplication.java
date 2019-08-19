@@ -2,7 +2,6 @@ package sk.essentialdata;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * @author Filip Bednárik
- * @since 4.4.2017
- */
 @SpringBootApplication
 @RestController
 public class EaExporterApplication extends WebMvcConfigurerAdapter {
@@ -24,11 +19,14 @@ public class EaExporterApplication extends WebMvcConfigurerAdapter {
     SpringApplication.run(EaExporterApplication.class, args);
   }
 
-  @Value("${app.path-to-webserver}")
-  String pathToWebserver;
+  private final String pathToWebserver;
+  private final EaDumpService eaDumpService;
 
-  @Autowired
-  EaDumpService eaDumpService;
+  public EaExporterApplication(@Value("${app.path-to-webserver}") String pathToWebserver,
+      EaDumpService eaDumpService) {
+    this.pathToWebserver = pathToWebserver;
+    this.eaDumpService = eaDumpService;
+  }
 
   @RequestMapping("/generate")
   public String generate(

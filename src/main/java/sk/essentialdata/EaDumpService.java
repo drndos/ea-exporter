@@ -3,10 +3,6 @@ package sk.essentialdata;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-/**
- * @author Filip Bednárik
- * @since 4.4.2017
- */
 @Service
 public class EaDumpService {
 
