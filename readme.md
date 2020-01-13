@@ -23,6 +23,9 @@ Create your own application.properties file and edit the configuration
 ```
 java -jar ea-exporter.jar application.properties
 ```
+
+## Run as Windows service
+https://dzone.com/articles/spring-boot-as-a-windows-service-in-5-minutes
 ### Generate the HTML report
 By visiting http://your-server:port/generate
 ### View the result
